@@ -6,9 +6,12 @@ from rtm_acoustic.check_jge_submission_readiness import check_manuscript, write_
 
 
 def test_check_manuscript_reports_core_jge_limits(tmp_path: Path) -> None:
-    result = check_manuscript(
-        Path("rtm_acoustic/docs/jge_submission_package_mainfigures/manuscript/sci_fwi_rtm_innovation_manuscript_draft.md")
-    )
+    manuscript = Path("rtm_acoustic/docs/jge_submission_package_mainfigures/manuscript/sci_fwi_rtm_innovation_manuscript_draft.md")
+    if not manuscript.exists():
+        manuscript = Path("docs/sci_fwi_rtm_innovation_manuscript_draft.md")
+    if not manuscript.exists():
+        manuscript = Path("rtm_acoustic/docs/sci_fwi_rtm_innovation_manuscript_draft.md")
+    result = check_manuscript(manuscript)
     checks = {check["item"]: check for check in result["checks"]}
 
     assert checks["English abstract <=250 words"]["value"] > 0

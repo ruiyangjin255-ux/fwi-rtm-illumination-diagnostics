@@ -1,0 +1,32 @@
+[
+  {
+    "figure": "Figure 1",
+    "title": "Literature-guided FWI-RTM synthesis and claim boundary",
+    "alt_text": "Four-panel summary linking literature needs to implemented FWI-RTM quality gates, update-scale selection, evidence strength, and conservative publishable claims.",
+    "linked_claim": "quality_gated_fwi_rtm"
+  },
+  {
+    "figure": "Figure 2",
+    "title": "RTM validation before and after quality-gated FWI updating",
+    "alt_text": "RTM images from true, initial, and damped FWI velocities are compared with an after-minus-before panel; the damped update gives only a slight filtered RMSE improvement.",
+    "linked_claim": "quality_gated_fwi_rtm"
+  },
+  {
+    "figure": "Figure 3",
+    "title": "Full-aperture RTM imaging-condition diagnostics",
+    "alt_text": "Source-normalized, source-receiver-normalized, Laplacian source-normalized, and receiver-illumination panels show how imaging conditions change salt-model RTM expression.",
+    "linked_claim": "imaging_condition_separation"
+  },
+  {
+    "figure": "Figure 4",
+    "title": "Local FWI ablation and conservative claim boundary",
+    "alt_text": "Local salt-window curves and bars show that adaptive line search reduces FWI misfit more than the current lightweight illumination preconditioner.",
+    "linked_claim": "negative_ablation_boundary"
+  },
+  {
+    "figure": "Figure 5",
+    "title": "Target-zone illumination, RTM response, and FWI update diagnostics",
+    "alt_text": "Salt-top, salt-flank, and subsalt masks are compared against illumination, RTM response, and FWI update energy, showing weak subsalt response and negligible subsalt updates.",
+    "linked_claim": "target_zone_illumination_diagnostics"
+  }
+]

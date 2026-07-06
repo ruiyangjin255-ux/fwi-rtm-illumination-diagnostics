@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from rtm_acoustic.acoustic_rtm import preprocess_migration_section
+from rtm_acoustic.build_jge_innovation_framework import build as build_innovation_framework
 from rtm_acoustic.build_target_zone_illumination_diagnostics import build as build_target_zone_diagnostics
 
 
@@ -384,6 +385,7 @@ Salt-top, salt-flank, and subsalt zones are derived from the high-velocity salt 
 
 
 def main() -> None:
+    build_innovation_framework()
     make_figure1_fwi_quality_gate()
     make_figure2_rtm_validation()
     make_figure3_imaging_conditions()

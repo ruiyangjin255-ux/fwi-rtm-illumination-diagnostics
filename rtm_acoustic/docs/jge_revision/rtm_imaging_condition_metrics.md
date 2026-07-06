@@ -1,0 +1,8 @@
+# RTM imaging-condition metrics
+
+| case | correlation | abs_p99 | low_illumination_fraction | claim_role |
+| --- | --- | --- | --- | --- |
+| source_receiver_vs_source_normalized | 0.9732 | 3.005480e-01 | 0.017391 | source-receiver normalization close to source-only under full aperture |
+| laplacian_source_vs_source_normalized | -0.2822 | 7.758782e-02 | 0.017391 | laplacian changes spectral content and low-wavenumber background |
+| raw_cross_correlation | 0.9744 | 6.874397e+04 | 0.017391 | amplitude reference |
+| laplacian_raw | -0.2620 | 7.058836e+02 | 0.017391 | edge-enhancement reference |

@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from rtm_acoustic.build_jge_innovation_framework import JGE_AUTHOR_GUIDE_URL, JGE_PAPER_LIMITS
 
 ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_DIR = ROOT / "rtm_acoustic" / "docs" / "jge_submission_package_mainfigures"
@@ -13,11 +14,11 @@ DEFAULT_MANUSCRIPT = PACKAGE_DIR / "manuscript" / "sci_fwi_rtm_innovation_manusc
 DEFAULT_OUTPUT = PACKAGE_DIR / "JGE_readiness_report.md"
 
 JGE_LIMITS = {
-    "paper_abstract_words": 250,
-    "paper_keywords": 5,
-    "paper_references": 50,
-    "paper_tables_figures": 10,
-    "paper_word_count": 8000,
+    "paper_abstract_words": JGE_PAPER_LIMITS["abstract_words"],
+    "paper_keywords": JGE_PAPER_LIMITS["keywords"],
+    "paper_references": JGE_PAPER_LIMITS["references"],
+    "paper_tables_figures": JGE_PAPER_LIMITS["figures_tables"],
+    "paper_word_count": JGE_PAPER_LIMITS["word_count"],
 }
 
 
@@ -82,6 +83,8 @@ def check_manuscript(manuscript: Path, package_dir: Path = PACKAGE_DIR) -> dict[
         package_dir / "package_file_index.csv",
         package_dir / "JGE_submission_checklist.md",
         package_dir / "JGE_reference_audit.md",
+        package_dir / "reports" / "jge_innovation_framework.md",
+        package_dir / "figures" / "jge_figure_alt_text.md",
         package_dir / "figures" / "figure1_fwi_quality_gate.tiff",
         package_dir / "figures" / "figure2_rtm_before_after_validation.tiff",
         package_dir / "figures" / "figure3_imaging_condition_diagnostics.tiff",
@@ -141,6 +144,12 @@ def check_manuscript(manuscript: Path, package_dir: Path = PACKAGE_DIR) -> dict[
             "limit": True,
             "status": _status("AI 辅助声明" in text),
         },
+        {
+            "item": "Innovation framework referenced in manuscript",
+            "value": "创新点 1：文献驱动的 FWI-RTM 综合诊断框架" in text,
+            "limit": True,
+            "status": _status("创新点 1：文献驱动的 FWI-RTM 综合诊断框架" in text),
+        },
     ]
     for file_path in required_files:
         checks.append(
@@ -153,7 +162,7 @@ def check_manuscript(manuscript: Path, package_dir: Path = PACKAGE_DIR) -> dict[
         )
     return {
         "source": str(manuscript),
-        "guideline_source": "OUP Journal of Geophysics and Engineering Instructions to Authors, Article type guide for Paper",
+        "guideline_source": f"OUP Journal of Geophysics and Engineering Instructions to Authors: {JGE_AUTHOR_GUIDE_URL}",
         "limits": JGE_LIMITS,
         "checks": checks,
         "ready": all(check["status"] == "pass" for check in checks),

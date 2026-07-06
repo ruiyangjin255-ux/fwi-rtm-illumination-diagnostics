@@ -22,10 +22,14 @@ def test_build_package_writes_manifest_index_and_checklist(tmp_path: Path) -> No
     assert (tmp_path / "package" / "figures" / "figure3_imaging_condition_diagnostics.png").exists()
     assert (tmp_path / "package" / "figures" / "figure4_local_fwi_claim_boundary.png").exists()
     assert (tmp_path / "package" / "figures" / "figure5_target_zone_illumination_diagnostics.png").exists()
+    assert (tmp_path / "package" / "figures" / "jge_figure_alt_text.md").exists()
     assert (tmp_path / "package" / "tables" / "fwi_update_scale_optimization.csv").exists()
     assert (tmp_path / "package" / "tables" / "method_synthesis_matrix.csv").exists()
+    assert (tmp_path / "package" / "tables" / "jge_innovation_framework.csv").exists()
     assert (tmp_path / "package" / "tables" / "target_zone_illumination_metrics.csv").exists()
+    assert (tmp_path / "package" / "reports" / "jge_innovation_framework.md").exists()
 
     data = json.loads(manifest_path.read_text(encoding="utf-8"))
     assert data["pipeline_metrics"]["selected_alpha"] == 0.1
     assert data["files"]["figures"]["figure5_target_zone_illumination_diagnostics.png"]["bytes"] > 0
+    assert data["files"]["innovation_framework"]["bytes"] > 0
