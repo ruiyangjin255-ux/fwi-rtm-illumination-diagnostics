@@ -1,0 +1,10 @@
+# FWI update-scale optimization
+
+| case | alpha | accepted | selected | score | mae_improvement_pct | rmse_improvement_pct | edge_mae_improvement_pct | gradient_mae_improvement_pct | verdict |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| CG_allshots_v2 | 0.0 | False | False | 0.00000000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | not_improved |
+| CG_allshots_v2 | 0.1 | True | True | 0.00152582 | 0.1304 | 0.0215 | 0.0040 | -0.0135 | numerical_improvement_without_gradient_improvement |
+| CG_allshots_v2 | 0.25 | False | False | 0.00207420 | 0.2359 | 0.0453 | -0.0024 | -0.2852 | numerical_improvement_without_gradient_improvement |
+| CG_allshots_v2 | 0.5 | False | False | 0.00000527 | 0.2715 | 0.0621 | -0.0299 | -1.2126 | numerical_improvement_without_gradient_improvement |
+| CG_allshots_v2 | 0.75 | False | False | -0.00359320 | 0.2384 | 0.0503 | -0.0580 | -2.3602 | numerical_improvement_without_gradient_improvement |
+| CG_allshots_v2 | 1.0 | False | False | -0.00873670 | 0.1119 | 0.0100 | -0.0893 | -3.6250 | numerical_improvement_without_gradient_improvement |
