@@ -19,9 +19,9 @@
   },
   {
     "figure": "Figure 4",
-    "title": "Local FWI ablation and conservative claim boundary",
-    "alt_text": "Local salt-window curves and bars show that adaptive line search reduces FWI misfit more than the current lightweight illumination preconditioner.",
-    "linked_claim": "negative_ablation_boundary"
+    "title": "Illumination-trust spatial FWI update gate",
+    "alt_text": "A spatial alpha map, candidate quality frontier, and error-map comparison show that illumination-trust gating improves MAE, RMSE, and edge MAE while avoiding global-update edge degradation.",
+    "linked_claim": "illumination_trust_spatial_update_gate"
   },
   {
     "figure": "Figure 5",

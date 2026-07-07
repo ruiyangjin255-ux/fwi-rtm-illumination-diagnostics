@@ -88,9 +88,10 @@ def check_manuscript(manuscript: Path, package_dir: Path = PACKAGE_DIR) -> dict[
         package_dir / "figures" / "figure1_fwi_quality_gate.tiff",
         package_dir / "figures" / "figure2_rtm_before_after_validation.tiff",
         package_dir / "figures" / "figure3_imaging_condition_diagnostics.tiff",
-        package_dir / "figures" / "figure4_local_fwi_claim_boundary.tiff",
+        package_dir / "figures" / "figure4_spatial_update_gate.tiff",
         package_dir / "figures" / "figure5_target_zone_illumination_diagnostics.tiff",
         package_dir / "tables" / "fwi_update_scale_optimization.csv",
+        package_dir / "tables" / "spatial_update_gate_candidates.csv",
         package_dir / "tables" / "target_zone_illumination_metrics.csv",
         package_dir / "reports" / "optimized_fwi_rtm_pipeline_report.md",
     ]
@@ -146,9 +147,9 @@ def check_manuscript(manuscript: Path, package_dir: Path = PACKAGE_DIR) -> dict[
         },
         {
             "item": "Innovation framework referenced in manuscript",
-            "value": "创新点 1：文献驱动的 FWI-RTM 综合诊断框架" in text,
+            "value": "创新点 1：照明可信域空间 FWI 更新门控" in text,
             "limit": True,
-            "status": _status("创新点 1：文献驱动的 FWI-RTM 综合诊断框架" in text),
+            "status": _status("创新点 1：照明可信域空间 FWI 更新门控" in text),
         },
     ]
     for file_path in required_files:

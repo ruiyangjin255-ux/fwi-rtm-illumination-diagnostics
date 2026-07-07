@@ -21,6 +21,7 @@ def test_build_jge_innovation_framework_maps_claims_to_outputs(tmp_path: Path) -
     assert len(claims) == 5
     assert len(alt_text) == 5
     assert {claim["claim_id"] for claim in claims} >= {
+        "illumination_trust_spatial_update_gate",
         "quality_gated_fwi_rtm",
         "target_zone_illumination_diagnostics",
         "imaging_condition_separation",

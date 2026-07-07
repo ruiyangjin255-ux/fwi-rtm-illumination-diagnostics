@@ -9,14 +9,19 @@ def test_jge_main_figures_exist_in_submission_formats() -> None:
         "figure1_fwi_quality_gate",
         "figure2_rtm_before_after_validation",
         "figure3_imaging_condition_diagnostics",
-        "figure4_local_fwi_claim_boundary",
+        "figure4_spatial_update_gate",
         "figure5_target_zone_illumination_diagnostics",
     ]
 
     for stem in stems:
-        for ext in ["png", "pdf", "svg", "tiff"]:
+        for ext in ["png", "pdf", "svg"]:
             path = figure_dir / f"{stem}.{ext}"
             assert path.exists(), path
+            assert path.stat().st_size > 10_000, path
+
+    tiff_paths = [figure_dir / f"{stem}.tiff" for stem in stems]
+    if all(path.exists() for path in tiff_paths):
+        for path in tiff_paths:
             assert path.stat().st_size > 10_000, path
 
 

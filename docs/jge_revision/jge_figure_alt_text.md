@@ -20,11 +20,11 @@ Alt text: Source-normalized, source-receiver-normalized, Laplacian source-normal
 
 Linked innovation claim: `imaging_condition_separation`
 
-## Figure 4. Local FWI ablation and conservative claim boundary
+## Figure 4. Illumination-trust spatial FWI update gate
 
-Alt text: Local salt-window curves and bars show that adaptive line search reduces FWI misfit more than the current lightweight illumination preconditioner.
+Alt text: A spatial alpha map, candidate quality frontier, and error-map comparison show that illumination-trust gating improves MAE, RMSE, and edge MAE while avoiding global-update edge degradation.
 
-Linked innovation claim: `negative_ablation_boundary`
+Linked innovation claim: `illumination_trust_spatial_update_gate`
 
 ## Figure 5. Target-zone illumination, RTM response, and FWI update diagnostics
 

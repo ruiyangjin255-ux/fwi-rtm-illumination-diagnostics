@@ -12,9 +12,9 @@ RTM is performed with the true velocity, the initial smoothed velocity, and the 
 
 Source-normalized, source-receiver-normalized, Laplacian-enhanced, and receiver-illumination panels summarize the full-aperture imaging-condition behavior. The source-receiver normalized image remains close to the source-normalized image, while the Laplacian condition changes the spectral emphasis and reflector expression.
 
-## Figure 4. Local FWI ablation and conservative claim boundary
+## Figure 4. Illumination-trust spatial FWI update gate
 
-The local-window FWI ablation shows that adaptive line search is more effective than the current lightweight illumination preconditioner. The bottom panels summarize the conservative claim boundary: full FWI updates must pass model-quality gates before being used for RTM interpretation.
+The figure replaces a single global FWI update scale with a spatially varying alpha field controlled by source-receiver illumination. Candidate gates are accepted only when MAE, RMSE, and edge-MAE all improve relative to the initial model. The selected gate improves model error while avoiding the edge degradation observed for the global alpha=0.1 update.
 
 ## Figure 5. Target-zone illumination, RTM response, and FWI update diagnostics
 

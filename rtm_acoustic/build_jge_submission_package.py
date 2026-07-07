@@ -10,6 +10,7 @@ from typing import Any
 
 from rtm_acoustic.build_jge_innovation_framework import build as build_innovation_framework
 from rtm_acoustic.build_jge_method_synthesis import build as build_method_synthesis
+from rtm_acoustic.build_spatial_update_gate import build as build_spatial_update_gate
 from rtm_acoustic.build_target_zone_illumination_diagnostics import build as build_target_zone_diagnostics
 from rtm_acoustic.check_jge_submission_readiness import check_manuscript, write_report
 from rtm_acoustic.check_reference_integrity import audit_references, write_audit
@@ -33,7 +34,7 @@ FIGURE_STEMS = {
     "figure1_fwi_quality_gate": "figure1_fwi_quality_gate",
     "figure2_rtm_before_after_validation": "figure2_rtm_before_after_validation",
     "figure3_imaging_condition_diagnostics": "figure3_imaging_condition_diagnostics",
-    "figure4_local_fwi_claim_boundary": "figure4_local_fwi_claim_boundary",
+    "figure4_spatial_update_gate": "figure4_spatial_update_gate",
     "figure5_target_zone_illumination_diagnostics": "figure5_target_zone_illumination_diagnostics",
 }
 
@@ -43,6 +44,7 @@ TABLE_FILES = [
     "fwi_update_scale_optimization.csv",
     "rtm_imaging_condition_metrics.csv",
     "local_fwi_strategy_ranking.csv",
+    "spatial_update_gate_candidates.csv",
     "innovation_ranking.csv",
     "method_synthesis_matrix.csv",
     "target_zone_illumination_metrics.csv",
@@ -54,6 +56,11 @@ TARGET_ZONE_INPUTS = [
     FWI_RUN / "full_salt_inverted_model.npy",
     FIGURES / "figure5_target_zone_illumination_diagnostics.png",
     JGE_REVISION / "target_zone_illumination_metrics.csv",
+]
+
+SPATIAL_GATE_PREBUILT = [
+    FIGURES / "figure4_spatial_update_gate.png",
+    JGE_REVISION / "spatial_update_gate_candidates.csv",
 ]
 
 
@@ -136,7 +143,19 @@ def _has_prebuilt_target_zone_diagnostics() -> bool:
     return all(path.exists() for path in prebuilt)
 
 
+def _has_prebuilt_spatial_update_gate() -> bool:
+    return all(path.exists() for path in SPATIAL_GATE_PREBUILT)
+
+
 def _refresh_data_dependent_results() -> None:
+    if _can_rebuild_target_zone_diagnostics():
+        build_spatial_update_gate()
+    elif not _has_prebuilt_spatial_update_gate():
+        missing = [str(path) for path in SPATIAL_GATE_PREBUILT if not path.exists()]
+        raise FileNotFoundError(
+            "Spatial update gate cannot be rebuilt and no prebuilt figure/table pair was found. "
+            f"Missing outputs include: {missing}"
+        )
     if _can_rebuild_target_zone_diagnostics():
         build_target_zone_diagnostics()
     elif not _has_prebuilt_target_zone_diagnostics():
