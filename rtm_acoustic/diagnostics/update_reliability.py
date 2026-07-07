@@ -84,8 +84,12 @@ def top_coverage_support(score: np.ndarray, coverage: float) -> np.ndarray:
     if coverage <= 0.0 or coverage > 1.0:
         raise ValueError("coverage must be in (0, 1]")
     values = np.asarray(score, dtype=float)
-    threshold = np.quantile(values, 1.0 - coverage)
-    support = values >= threshold
+    flat = values.ravel()
+    count = max(1, int(np.ceil(float(coverage) * flat.size)))
+    selected = np.argpartition(flat, flat.size - count)[flat.size - count :]
+    support = np.zeros(flat.size, dtype=bool)
+    support[selected] = True
+    support = support.reshape(values.shape)
     if not np.any(support):
         raise ValueError("coverage support is empty")
     return support
@@ -140,4 +144,3 @@ def write_manifest(path: Path, *, config: dict[str, Any], arrays: dict[str, np.n
     }
     path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     return path
-

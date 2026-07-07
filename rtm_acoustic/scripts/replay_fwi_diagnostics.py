@@ -42,6 +42,15 @@ def _first_float(config: dict, key: str, default: float) -> float:
     return float(values)
 
 
+def _max_float(config: dict, key: str, default: float) -> float:
+    values = config.get(key)
+    if isinstance(values, list) and values:
+        return float(max(float(value) for value in values))
+    if values is None:
+        return float(default)
+    return float(values)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Validate required FWI diagnostics for reliability-gate replay.")
     parser.add_argument("--config", type=Path, required=True)
@@ -77,7 +86,7 @@ def main() -> None:
         coverage=_first_float(config, "coverage_candidates", 0.3635),
         sigma_x=_first_float(config, "sigma_x_candidates", 4.0),
         sigma_z=_first_float(config, "sigma_z_candidates", 4.0),
-        alpha_max=_first_float(config, "alpha_max_candidates", 0.3),
+        alpha_max=_max_float(config, "alpha_max_candidates", 0.3),
     )
     components = build_reliability_components(
         delta_model=delta_model,

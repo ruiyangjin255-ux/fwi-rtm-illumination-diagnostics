@@ -13,13 +13,32 @@ CONFIG = Path("rtm_acoustic/configs/salt_reliability_gate_v1.yaml")
 OUTPUT = Path("rtm_acoustic/outputs/salt_reliability_gate_v1")
 
 
-def test_replay_smoke_fails_fast_without_required_diagnostics() -> None:
+def test_replay_smoke_fails_fast_without_required_diagnostics(tmp_path: Path) -> None:
+    output = Path("rtm_acoustic/outputs/reliability_missing_diagnostics_smoke")
+    shutil.rmtree(output, ignore_errors=True)
+    config = tmp_path / "missing_diagnostics.yaml"
+    config.write_text(
+        "\n".join(
+            [
+                "name: reliability_missing_diagnostics_smoke",
+                "output_dir: rtm_acoustic/outputs/reliability_missing_diagnostics_smoke",
+                "num_shot_groups: 2",
+                "required_diagnostics:",
+                "  - gradient_group_00.npy",
+                "  - gradient_group_01.npy",
+                "  - source_adjoint_energy_proxy.npy",
+                "  - delta_model.npy",
+                "  - step_length.json",
+            ]
+        ),
+        encoding="utf-8",
+    )
     result = subprocess.run(
         [
             sys.executable,
             "rtm_acoustic/scripts/replay_fwi_diagnostics.py",
             "--config",
-            str(CONFIG),
+            str(config),
             "--smoke",
         ],
         cwd=Path.cwd(),
@@ -28,7 +47,7 @@ def test_replay_smoke_fails_fast_without_required_diagnostics() -> None:
         stderr=subprocess.PIPE,
     )
     assert result.returncode != 0
-    manifest = json.loads((OUTPUT / "manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["status"] == "BLOCKED_MISSING_FWI_DIAGNOSTICS"
     assert manifest["missing"]
 

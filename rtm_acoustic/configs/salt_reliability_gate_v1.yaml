@@ -8,6 +8,7 @@ alpha_max_candidates: [0.15, 0.30]
 sigma_x_candidates: [2, 4, 8]
 sigma_z_candidates: [2, 4, 8]
 eps: 1.0e-8
+target_update_fraction: 0.04
 required_diagnostics:
   - gradient_group_00.npy
   - gradient_group_01.npy

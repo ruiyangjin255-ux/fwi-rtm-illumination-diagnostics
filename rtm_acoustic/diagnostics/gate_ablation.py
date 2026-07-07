@@ -21,8 +21,13 @@ class GateAblationConfig:
 def _top_support(score: np.ndarray, coverage: float) -> np.ndarray:
     if coverage <= 0.0 or coverage > 1.0:
         raise ValueError("coverage must be in (0, 1]")
-    threshold = np.quantile(np.asarray(score, dtype=float), 1.0 - coverage)
-    return np.asarray(score) >= threshold
+    values = np.asarray(score, dtype=float)
+    flat = values.ravel()
+    count = max(1, int(np.ceil(float(coverage) * flat.size)))
+    selected = np.argpartition(flat, flat.size - count)[flat.size - count :]
+    support = np.zeros(flat.size, dtype=bool)
+    support[selected] = True
+    return support.reshape(values.shape)
 
 
 def _smooth_support(support: np.ndarray, sigma_z: float, sigma_x: float) -> np.ndarray:
@@ -122,4 +127,3 @@ def build_matched_gate_suite(
             alpha_max=config.alpha_max,
         )
     return gates
-
