@@ -2,11 +2,16 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+if __package__ in (None, ""):
+    sys.path.insert(0, str(ROOT))
 
 from rtm_acoustic.acoustic_rtm import (
     RTMConfig,
@@ -25,7 +30,6 @@ from rtm_acoustic.plot_paper_style import save_migration_figure, save_record_and
 from rtm_acoustic.run_multishot_rtm import limited_shots
 
 
-ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_TRUE_MODEL = ROOT / "fd2d_pml" / "vel" / "seg676x230.bin"
 DEFAULT_FWI_DIR = ROOT / "rtm_acoustic" / "outputs" / "FWI" / "full_salt_fwi_cg_allshots_v2"
 DEFAULT_OUTPUT = ROOT / "rtm_acoustic" / "outputs" / "RTM" / "before_after_fwi_smoke"
