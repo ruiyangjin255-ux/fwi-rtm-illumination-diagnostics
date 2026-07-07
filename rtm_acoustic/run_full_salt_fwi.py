@@ -88,6 +88,17 @@ def select_fwi_shots(config: FullSaltFWIConfig) -> list[int]:
     return limited_shots(all_shots, config.max_shots)
 
 
+def exclude_audit_fold_shots(shots: list[int], *, audit_fold: int | None, audit_num_folds: int) -> list[int]:
+    """Exclude interleaved audit shots from the inversion set."""
+    if audit_fold is None or audit_fold < 0:
+        return [int(value) for value in shots]
+    if audit_num_folds <= 1:
+        raise ValueError("audit_num_folds 必须大于 1")
+    if audit_fold >= audit_num_folds:
+        raise ValueError("audit_fold 必须小于 audit_num_folds")
+    return [int(shot) for index, shot in enumerate(shots) if index % audit_num_folds != audit_fold]
+
+
 def _runtime_config(config: FullSaltFWIConfig) -> FullSaltFWIConfig:
     """Return the padded grid configuration used internally for wave propagation."""
     return replace(
@@ -491,6 +502,8 @@ def run_full_salt_fwi(
     num_shot_groups: int = 4,
     shot_group_mode: str = "interleaved",
     diagnostics_dir: str | Path | None = None,
+    audit_fold: int | None = None,
+    audit_num_folds: int = 4,
 ) -> dict[str, Any]:
     """运行完整盐丘模型 FWI，并在每炮后保存可恢复 checkpoint。"""
     if config.optimizer not in {"steepest", "cg", "p-cg"}:
@@ -512,7 +525,8 @@ def run_full_salt_fwi(
         pad_top=config.pad_top,
         pad_bottom=config.pad_bottom,
     )
-    shots = select_fwi_shots(config)
+    all_selected_shots = select_fwi_shots(config)
+    shots = exclude_audit_fold_shots(all_selected_shots, audit_fold=audit_fold, audit_num_folds=audit_num_folds)
     if not shots:
         raise ValueError("没有可用炮点")
     if initial_model_path is None:
@@ -694,6 +708,17 @@ def run_full_salt_fwi(
             "padded_width_m": float(true_model.shape[1] * config.dx),
         },
         "config": asdict(config),
+        "audit_split": {
+            "audit_fold": None if audit_fold is None or audit_fold < 0 else int(audit_fold),
+            "audit_num_folds": int(audit_num_folds),
+            "all_selected_shot_count": len(all_selected_shots),
+            "inversion_shot_count": len(shots),
+            "audit_shots": [
+                int(shot)
+                for index, shot in enumerate(all_selected_shots)
+                if audit_fold is not None and audit_fold >= 0 and index % audit_num_folds == audit_fold
+            ],
+        },
         "figure_display_crop": display_crop,
         "shot_positions": [int(value) for value in shots],
         "shot_count": len(shots),
@@ -748,6 +773,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-shot-groups", type=int, default=4)
     parser.add_argument("--shot-group-mode", choices=["interleaved"], default="interleaved")
     parser.add_argument("--diagnostics-dir", type=Path, default=None)
+    parser.add_argument("--audit-fold", type=int, default=-1, help="Exclude shots with shot_index mod audit_num_folds equal to this fold.")
+    parser.add_argument("--audit-num-folds", type=int, default=4)
     return parser.parse_args()
 
 
@@ -780,6 +807,8 @@ def main() -> None:
         num_shot_groups=args.num_shot_groups,
         shot_group_mode=args.shot_group_mode,
         diagnostics_dir=args.diagnostics_dir,
+        audit_fold=args.audit_fold if args.audit_fold >= 0 else None,
+        audit_num_folds=args.audit_num_folds,
     )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
