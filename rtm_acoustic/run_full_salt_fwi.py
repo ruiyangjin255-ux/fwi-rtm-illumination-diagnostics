@@ -379,6 +379,84 @@ def _save_optimizer_state(output_dir: Path, gradient: Array, direction: Array) -
     _save_array(paths["previous_direction"], direction)
 
 
+def _shot_group_index(shot_index: int, num_shot_groups: int, shot_group_mode: str) -> int:
+    if num_shot_groups <= 0:
+        raise ValueError("num_shot_groups 必须为正整数")
+    if shot_group_mode != "interleaved":
+        raise ValueError("当前仅支持 interleaved shot_group_mode")
+    return int(shot_index) % int(num_shot_groups)
+
+
+def _write_reliability_iteration_diagnostics(
+    diagnostics_dir: Path,
+    *,
+    iteration: int,
+    shots: list[int],
+    group_gradients: list[Array],
+    group_counts: list[int],
+    source_energy_proxy: Array,
+    aggregate_gradient: Array,
+    average_update: Array,
+    search_direction: Array,
+    scaled_update: Array,
+    config: FullSaltFWIConfig,
+    step_scale: float,
+    cg_beta: float,
+) -> None:
+    """Write the diagnostics needed by ECG reliability-gate replay scripts."""
+    iteration_dir = diagnostics_dir / f"iter_{iteration:03d}"
+    for index, gradient in enumerate(group_gradients):
+        count = max(int(group_counts[index]), 1)
+        normalized = np.asarray(gradient, dtype=np.float32) / np.float32(count)
+        _save_array(iteration_dir / f"gradient_group_{index:02d}.npy", normalized)
+        _save_array(diagnostics_dir / f"gradient_group_{index:02d}.npy", normalized)
+
+    _save_array(iteration_dir / "source_adjoint_energy_proxy.npy", source_energy_proxy)
+    _save_array(iteration_dir / "aggregate_gradient.npy", aggregate_gradient)
+    _save_array(iteration_dir / "average_update.npy", average_update)
+    _save_array(iteration_dir / "search_direction.npy", search_direction)
+    _save_array(iteration_dir / "delta_model.npy", scaled_update)
+    _save_array(diagnostics_dir / "source_adjoint_energy_proxy.npy", source_energy_proxy)
+    _save_array(diagnostics_dir / "aggregate_gradient.npy", aggregate_gradient)
+    _save_array(diagnostics_dir / "average_update.npy", average_update)
+    _save_array(diagnostics_dir / "search_direction.npy", search_direction)
+    _save_array(diagnostics_dir / "delta_model.npy", scaled_update)
+
+    step_metadata = {
+        "version": 1,
+        "iteration": int(iteration),
+        "step_scale": float(step_scale),
+        "max_update": float(config.max_update),
+        "optimizer": config.optimizer,
+        "cg_beta": float(cg_beta),
+        "num_shot_groups": len(group_gradients),
+        "shot_group_mode": "interleaved",
+        "group_counts": [int(value) for value in group_counts],
+        "shots": [int(value) for value in shots],
+        "proxy_note": "source_adjoint_energy_proxy stores accumulated source-wavefield energy proxy; adjoint energy is not stored separately.",
+    }
+    _json_dump(iteration_dir / "step_length.json", step_metadata)
+    _json_dump(diagnostics_dir / "step_length.json", step_metadata)
+
+    manifest = {
+        "version": 1,
+        "status": "READY",
+        "iteration": int(iteration),
+        "config": asdict(config),
+        "arrays": {
+            "group_gradients": [f"gradient_group_{index:02d}.npy" for index in range(len(group_gradients))],
+            "source_adjoint_energy_proxy": "source_adjoint_energy_proxy.npy",
+            "aggregate_gradient": "aggregate_gradient.npy",
+            "average_update": "average_update.npy",
+            "search_direction": "search_direction.npy",
+            "delta_model": "delta_model.npy",
+        },
+        "step_metadata": "step_length.json",
+    }
+    _json_dump(iteration_dir / "diagnostics_manifest.json", manifest)
+    _json_dump(diagnostics_dir / "diagnostics_manifest.json", manifest)
+
+
 def _compute_cg_direction(
     gradient_direction: Array,
     previous_gradient: Array | None,
@@ -409,14 +487,23 @@ def run_full_salt_fwi(
     initial_model_path: str | Path | None = None,
     resume: bool = False,
     write_figures: bool = True,
+    save_iteration_diagnostics: bool = False,
+    num_shot_groups: int = 4,
+    shot_group_mode: str = "interleaved",
+    diagnostics_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """运行完整盐丘模型 FWI，并在每炮后保存可恢复 checkpoint。"""
     if config.optimizer not in {"steepest", "cg", "p-cg"}:
         raise ValueError("optimizer 必须是 steepest、cg 或 p-cg")
     if config.pad_x < 0 or config.pad_top < 0 or config.pad_bottom < 0:
         raise ValueError("pad_x、pad_top 和 pad_bottom 必须为非负整数")
+    if save_iteration_diagnostics:
+        _shot_group_index(0, num_shot_groups, shot_group_mode)
+        if resume:
+            raise ValueError("save_iteration_diagnostics 当前不支持 resume；请从干净输出目录重新运行以避免诊断量不完整")
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    diagnostics_root = Path(diagnostics_dir) if diagnostics_dir is not None else output_dir / "diagnostics"
     true_physical = read_binary_model(model_path, nx=config.nx, nz=config.nz)
     physical_shape = true_physical.shape
     true_model = pad_velocity_model(
@@ -483,6 +570,9 @@ def run_full_salt_fwi(
         else:
             completed_shots, misfit_sum, gradient_sum, current = loaded
         completed_set = set(completed_shots)
+        group_gradients = [np.zeros_like(current, dtype=np.float32) for _ in range(num_shot_groups)]
+        group_counts = [0 for _ in range(num_shot_groups)]
+        source_energy_proxy = np.zeros_like(current, dtype=np.float32)
 
         for shot_index, source_x in enumerate(shots):
             if source_x in completed_set:
@@ -495,6 +585,7 @@ def run_full_salt_fwi(
             residual = predicted - observed
             misfit_sum += compute_record_misfit(predicted, observed)
             update_direction = compute_update_direction(current, cfg, residual, wavefield_path)
+            illumination = None
             if config.optimizer == "p-cg":
                 illumination = compute_source_illumination(wavefield_path, cfg)
                 update_direction = apply_illumination_preconditioner(
@@ -502,6 +593,13 @@ def run_full_salt_fwi(
                     illumination,
                     epsilon=config.preconditioner_epsilon,
                 )
+            if save_iteration_diagnostics:
+                if illumination is None:
+                    illumination = compute_source_illumination(wavefield_path, cfg)
+                group_id = _shot_group_index(shot_index, num_shot_groups, shot_group_mode)
+                group_gradients[group_id] += update_direction
+                group_counts[group_id] += 1
+                source_energy_proxy += np.asarray(illumination, dtype=np.float32)
             gradient_sum += update_direction
             completed_shots.append(int(source_x))
             completed_set.add(int(source_x))
@@ -529,6 +627,22 @@ def run_full_salt_fwi(
             search_direction, cg_beta = average_update, 0.0
         clipped_update = clip_velocity_update(search_direction, config.max_update)
         scaled_update = np.float32(config.step_scale) * clipped_update
+        if save_iteration_diagnostics:
+            _write_reliability_iteration_diagnostics(
+                diagnostics_root,
+                iteration=iteration,
+                shots=shots,
+                group_gradients=group_gradients,
+                group_counts=group_counts,
+                source_energy_proxy=source_energy_proxy,
+                aggregate_gradient=gradient_sum,
+                average_update=average_update,
+                search_direction=search_direction,
+                scaled_update=scaled_update,
+                config=config,
+                step_scale=config.step_scale,
+                cg_beta=cg_beta,
+            )
         current = np.clip(current + scaled_update, config.velocity_min, config.velocity_max).astype(np.float32)
         _save_optimizer_state(output_dir, average_update, search_direction)
         previous_gradient = average_update.copy()
@@ -630,6 +744,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--absorb-cells", type=int, default=FullSaltFWIConfig.absorb_cells)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--no-figures", action="store_true")
+    parser.add_argument("--save-iteration-diagnostics", action="store_true")
+    parser.add_argument("--num-shot-groups", type=int, default=4)
+    parser.add_argument("--shot-group-mode", choices=["interleaved"], default="interleaved")
+    parser.add_argument("--diagnostics-dir", type=Path, default=None)
     return parser.parse_args()
 
 
@@ -658,6 +776,10 @@ def main() -> None:
         initial_model_path=args.initial_model,
         resume=args.resume,
         write_figures=not args.no_figures,
+        save_iteration_diagnostics=args.save_iteration_diagnostics,
+        num_shot_groups=args.num_shot_groups,
+        shot_group_mode=args.shot_group_mode,
+        diagnostics_dir=args.diagnostics_dir,
     )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
