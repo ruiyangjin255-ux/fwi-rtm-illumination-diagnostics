@@ -1,0 +1,83 @@
+# Local agent/workspace state
+.agents/
+.codex/
+tmp/
+
+# Python caches and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Virtual environments and local environment files
+.venv/
+venv/
+env/
+*.env
+.env*
+
+# External/vendor checkouts
+.external/
+fwi_visionfm/external/ncs_models/
+
+# Model weights and ML checkpoints
+weights/
+**/weights/
+*.ckpt
+*.h5
+*.onnx
+*.pt
+*.pth
+*.safetensors
+*.tflite
+
+# Generated outputs and experiment artifacts
+outputs/
+**/outputs/
+results/
+**/results/
+saved_data/
+**/saved_data/
+checkpoint/
+**/checkpoint/
+optimizer_state/
+**/optimizer_state/
+wavefields/
+**/wavefields/
+
+# Large scientific/binary data products
+*.bin
+*.dat
+*.mat
+*.npy
+*.npz
+*.hdf5
+*.h5ad
+
+# Rendered figures and generated media
+*.tif
+*.tiff
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.mp4
+*.avi
+
+# Compiled binaries
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+**/fd2d_pml/bin/mod
+
+# OS/editor noise and local backups
+.DS_Store
+*.bak
+*.bak_*

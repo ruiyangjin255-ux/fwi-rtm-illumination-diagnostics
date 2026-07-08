@@ -1,0 +1,13 @@
+ncs:
+  repo: "D:/ryjin/fwi_visionfm/external/ncs_models"
+  ncs_2d: "D:/ryjin/fwi_visionfm/weights/ncs/NCS-v1-2d-base"
+  ncs_2p5d: "D:/ryjin/fwi_visionfm/weights/ncs/NCS-v1-2.5d-base"
+
+mae:
+  vit_mae_base: "D:/ryjin/fwi_visionfm/weights/mae/vit-mae-base"
+  vit_mae_large: "D:/ryjin/fwi_visionfm/weights/mae/vit-mae-large"
+
+requirements:
+  preferred_device: "cpu"
+  allow_fallback: true
+  no_benchmark_claim: true

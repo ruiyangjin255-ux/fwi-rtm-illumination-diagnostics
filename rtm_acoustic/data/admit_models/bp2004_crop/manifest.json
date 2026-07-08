@@ -1,0 +1,10 @@
+{
+  "status": "MISSING_EXTERNAL_MODEL",
+  "timestamp_utc": "2026-07-08T08:19:32.041967+00:00",
+  "git_commit": "UNKNOWN",
+  "command": "prepare_external_benchmark_crops.py",
+  "config_hash": "b43650a0ccf4c185",
+  "input_hash": "MISSING",
+  "model_source": "bp2004",
+  "source_path": "D:\\data\\bp2004\\bp2004.npy"
+}

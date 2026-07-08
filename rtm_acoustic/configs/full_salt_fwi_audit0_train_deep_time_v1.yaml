@@ -1,0 +1,12 @@
+name: full_salt_fwi_audit0_train_deep_time_v1
+output_dir: rtm_acoustic/outputs/FWI/full_salt_fwi_cg_audit0_train_deep_time_v1
+source_fwi_dir: rtm_acoustic/outputs/FWI/full_salt_fwi_cg_audit0_train_ecg_v1
+time_dt: 0.001
+time_nt: 5000
+iterations: 3
+optimizer: cg
+audit_fold: 0
+audit_num_folds: 4
+forbid_dt_change: true
+forbid_overwrite_existing_outputs: true
+forbid_true_model_for_gate_selection: true

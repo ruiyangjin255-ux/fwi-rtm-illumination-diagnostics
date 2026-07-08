@@ -1,0 +1,36 @@
+data:
+  train_size: 300
+  val_size: 100
+  test_size: 100
+  seeds: [0, 1, 2]
+  metric_space: physical_velocity
+
+training:
+  epochs: 3
+  batch_size: 4
+  device: cpu
+
+models:
+  - cnn_baseline
+  - vit_tiny_scratch
+  - dinov2_lora_probe
+
+bridges:
+  - raw_repeat3
+  - raw_spectrogram
+
+decoders:
+  - simple_bounded_decoder
+  - unet_decoder
+
+losses:
+  default_l1:
+    l1: 1.0
+  gradient_l1:
+    l1: 1.0
+    gradient_l1: 0.2
+  structure_loss:
+    l1: 1.0
+    gradient_l1: 0.2
+    laplacian_l1: 0.1
+    edge_weighted_l1: 0.2

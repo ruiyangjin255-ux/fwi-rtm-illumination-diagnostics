@@ -1,0 +1,14 @@
+name: rtm_audit0_deep_time_v1
+output_dir: rtm_acoustic/outputs/RTM/audit0_gate_rtm_deep_time_v1
+preflight_dir: rtm_acoustic/outputs/deep_time_preflight_v1
+fwi_dir: rtm_acoustic/outputs/FWI/full_salt_fwi_cg_audit0_train_ecg_v1
+gate_dir: rtm_acoustic/outputs/salt_reliability_gate_audit0_v1
+short_rtm_dir: rtm_acoustic/outputs/RTM/audit0_gate_rtm_v1
+time_dt: 0.001
+time_nt: 5000
+time_f0: 15.0
+audit_shots: 12
+workers: 8
+forbid_dt_change: true
+forbid_overwrite_existing_outputs: true
+forbid_true_model_for_gate_selection: true

@@ -1,0 +1,17 @@
+name: admit_seg_salt_main_case
+dt: 0.001
+nt: 600
+T_record: 0.6
+rtm_shots:
+  - 4
+  - 64
+  - 124
+  - 184
+  - 244
+  - 304
+  - 364
+  - 424
+  - 484
+  - 544
+  - 604
+  - 664

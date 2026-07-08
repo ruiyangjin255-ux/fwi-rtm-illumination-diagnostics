@@ -1,0 +1,42 @@
+{
+  "sample_count": 2000,
+  "records_shape_set": [
+    [
+      5,
+      70,
+      1000
+    ]
+  ],
+  "velocity_shape_set": [
+    [
+      70,
+      70
+    ]
+  ],
+  "is_uniform_records_shape": true,
+  "is_uniform_velocity_shape": true,
+  "inferred_depth": 70,
+  "inferred_width": 70,
+  "data_dir": "D:\\ryjin\\fwi_visionfm\\data\\flatvel_a_subset2k",
+  "has_source_positions_count": 0,
+  "records_stats": {
+    "min": -26.204444885253906,
+    "max": 51.08161926269531,
+    "mean": -1.735422483761795e-05,
+    "std": 1.4769172668457031
+  },
+  "velocity_stats": {
+    "min": 1500.0,
+    "max": 4500.0,
+    "mean": 2770.625732421875,
+    "std": 783.4779663085938
+  },
+  "records_min": -26.204444885253906,
+  "records_max": 51.08161926269531,
+  "records_mean": -1.735422483761795e-05,
+  "records_std": 1.4769172668457031,
+  "velocity_min": 1500.0,
+  "velocity_max": 4500.0,
+  "velocity_mean": 2770.625732421875,
+  "velocity_std": 783.4779663085938
+}

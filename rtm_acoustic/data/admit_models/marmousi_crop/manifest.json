@@ -1,0 +1,10 @@
+{
+  "status": "MISSING_EXTERNAL_MODEL",
+  "timestamp_utc": "2026-07-08T08:19:31.660384+00:00",
+  "git_commit": "UNKNOWN",
+  "command": "prepare_external_benchmark_crops.py",
+  "config_hash": "080a62b0fdb0aaa9",
+  "input_hash": "MISSING",
+  "model_source": "marmousi",
+  "source_path": "D:\\data\\marmousi\\marmousi.npy"
+}

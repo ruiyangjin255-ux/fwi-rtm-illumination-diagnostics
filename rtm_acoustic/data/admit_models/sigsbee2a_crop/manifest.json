@@ -1,0 +1,10 @@
+{
+  "status": "MISSING_EXTERNAL_MODEL",
+  "timestamp_utc": "2026-07-08T08:19:31.835376+00:00",
+  "git_commit": "UNKNOWN",
+  "command": "prepare_external_benchmark_crops.py",
+  "config_hash": "697a2b349f75cc67",
+  "input_hash": "MISSING",
+  "model_source": "sigsbee2a",
+  "source_path": "D:\\data\\sigsbee\\sigsbee2a.npy"
+}

@@ -1,0 +1,48 @@
+{
+  "split_manifest": "D:\\ryjin\\fwi_visionfm\\data\\splits\\flat_curve_to_flatfault_subset500.json",
+  "counts": {
+    "train": 850,
+    "val": 0,
+    "test": 500
+  },
+  "train_count": 850,
+  "val_count": 0,
+  "test_count": 500,
+  "duplicate_count": 0,
+  "duplicates": [],
+  "family_distribution": {
+    "curvevel_a": {
+      "train": 419,
+      "val": 0,
+      "test": 0,
+      "total": 419
+    },
+    "flatvel_a": {
+      "train": 431,
+      "val": 0,
+      "test": 0,
+      "total": 431
+    },
+    "flatfault_a": {
+      "train": 0,
+      "val": 0,
+      "test": 500,
+      "total": 500
+    }
+  },
+  "records_shape_set": [
+    [
+      5,
+      70,
+      1000
+    ]
+  ],
+  "velocity_shape_set": [
+    [
+      70,
+      70
+    ]
+  ],
+  "inferred_depth": 70,
+  "inferred_width": 70
+}

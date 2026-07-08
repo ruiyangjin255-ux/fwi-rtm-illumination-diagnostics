@@ -1,0 +1,4 @@
+shots: 16
+audit_fraction: 0.25
+iterations: 2
+image_proxy: SIMPLIFIED_IMAGE_PROXY

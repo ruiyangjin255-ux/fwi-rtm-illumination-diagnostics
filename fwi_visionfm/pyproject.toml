@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fwi-visionfm"
+version = "0.1.0"
+description = "FWI-VisionFM research prototype with NumPy and PyTorch baselines."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy",
+  "torch",
+  "torchvision",
+]
+
+[project.optional-dependencies]
+vision = [
+  "timm>=1.0.0",
+]
+hf = [
+  "transformers>=4.40.0",
+]
+all = [
+  "timm>=1.0.0",
+  "transformers>=4.40.0",
+]
+
+[tool.setuptools]
+packages = ["fwi_visionfm", "fwi_visionfm.torch_backend", "fwi_visionfm.models", "fwi_visionfm.data", "fwi_visionfm.pasd"]
+
+[tool.setuptools.package-dir]
+fwi_visionfm = "."
+"fwi_visionfm.torch_backend" = "torch_backend"
+"fwi_visionfm.models" = "models"
+"fwi_visionfm.data" = "data"
+"fwi_visionfm.pasd" = "pasd"

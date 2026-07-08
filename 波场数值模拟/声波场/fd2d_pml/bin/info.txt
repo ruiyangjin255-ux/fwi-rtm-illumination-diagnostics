@@ -1,0 +1,16 @@
+******************info.txt*********************
+ nx     nz     dx    dz 
+401   401 10.000 10.000
+ spunit 
+ 1
+ dt     nt     f0    ts 
+ 0.0010  2001  20.00   0.05
+ shotbeg     shotend     shotintvl    zs 
+200   200    20     1
+ ksnp     ksg     tsnp
+ 1     0  0.250
+ velocity file location 
+../vel/cenzhuang_p_0401x0401.bin
+ surface data file location 
+../data
+***********************************************

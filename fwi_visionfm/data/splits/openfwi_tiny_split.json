@@ -1,0 +1,25 @@
+{
+  "train": [
+    "D:\\ryjin\\fwi_visionfm\\outputs\\converted_tiny\\sample_000001.npz"
+  ],
+  "val": [],
+  "test": [
+    "D:\\ryjin\\fwi_visionfm\\outputs\\converted_tiny\\sample_000000.npz"
+  ],
+  "families": {
+    "unknown": {
+      "total": 2,
+      "datasets": [
+        "tiny_openfwi_style"
+      ],
+      "subsets": []
+    }
+  },
+  "seed": 2026,
+  "mode": "in_domain",
+  "train_fraction": 0.7,
+  "val_fraction": 0.15,
+  "data_dirs": [
+    "D:\\ryjin\\fwi_visionfm\\outputs\\converted_tiny"
+  ]
+}

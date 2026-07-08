@@ -1,0 +1,13 @@
+{
+  "status": "READY",
+  "timestamp_utc": "2026-07-08T08:19:05.115161+00:00",
+  "git_commit": "UNKNOWN",
+  "command": "generate_admit_simple_models.py --models simple_fault",
+  "config_hash": "6f0c3f3eb648eb70",
+  "input_hash": "SYNTHETIC_DIAGNOSTIC_MODEL",
+  "model_source": "SYNTHETIC_DIAGNOSTIC_MODEL",
+  "true_hash": "303540f4b0f702b6",
+  "initial_hash": "fc69380701e88c93",
+  "velocity_min": 1800.0,
+  "velocity_max": 3400.0
+}

@@ -1,0 +1,12 @@
+model_name: simple_layered
+model_source: SYNTHETIC_DIAGNOSTIC_MODEL
+nx: 240
+nz: 120
+dx: 20.0
+dz: 20.0
+dt: 0.001
+f0: 10.0
+nt: 800
+source_z: 4
+receiver_z: 4
+shots: 16

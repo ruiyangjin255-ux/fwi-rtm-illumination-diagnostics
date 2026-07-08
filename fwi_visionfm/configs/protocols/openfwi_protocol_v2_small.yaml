@@ -1,0 +1,33 @@
+protocol_name: protocol_v2_small_benchmark
+train_size: 500
+val_size: 100
+in_family_test_size: 100
+cross_family_test_size: 100
+seeds: [0, 1, 2]
+epochs: 3
+batch_size: auto
+normalization: train-only stats
+metric_space: normalized by runner unless denormalized predictions are supplied
+input_shape: [5, 1000, 70]
+output_shape: [1, 70, 70]
+output_root: outputs/protocol_v2_small
+family_pairs:
+  - source: FlatVel_A
+    target: CurveVel_A
+  - source: FlatVel_A
+    target: auto_fault
+  - source: CurveVel_A
+    target: auto_fault
+cpu_matrix:
+  - model_name: cnn_baseline
+    bridge: raw_repeat3
+  - model_name: vit_tiny_scratch
+    bridge: raw_repeat3
+  - model_name: vit_tiny_scratch
+    bridge: raw_spectrogram
+  - model_name: dinov2_frozen_smoke
+    bridge: raw_repeat3
+  - model_name: dinov2_lora_smoke
+    bridge: raw_repeat3
+  - model_name: dinov2_lora_smoke
+    bridge: raw_spectrogram

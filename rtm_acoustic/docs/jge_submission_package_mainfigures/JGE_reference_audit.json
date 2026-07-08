@@ -1,0 +1,73 @@
+{
+  "source": "D:\\ryjin\\rtm_acoustic\\docs\\jge_submission_package_mainfigures\\manuscript\\sci_fwi_rtm_innovation_manuscript_draft.md",
+  "reference_count": 8,
+  "numbering_ok": true,
+  "review_count": 0,
+  "ready": true,
+  "rows": [
+    {
+      "number": 1,
+      "doi": "10.1190/1.1441754",
+      "url": "https://doi.org/10.1190/1.1441754",
+      "status": "pass",
+      "issues": "",
+      "entry": "Tarantola, A. (1984). Inversion of seismic reflection data in the acoustic approximation. *Geophysics*, 49(8), 1259-1266. https://doi.org/10.1190/1.1441754"
+    },
+    {
+      "number": 2,
+      "doi": "10.1190/1.1441434",
+      "url": "https://doi.org/10.1190/1.1441434",
+      "status": "pass",
+      "issues": "",
+      "entry": "Baysal, E., Kosloff, D. D., & Sherwood, J. W. C. (1983). Reverse time migration. *Geophysics*, 48(11), 1514-1524. https://doi.org/10.1190/1.1441434"
+    },
+    {
+      "number": 3,
+      "doi": "10.1190/1.3238367",
+      "url": "https://doi.org/10.1190/1.3238367",
+      "status": "pass",
+      "issues": "",
+      "entry": "Virieux, J., & Operto, S. (2009). An overview of full-waveform inversion in exploration geophysics. *Geophysics*, 74(6), WCC1-WCC26. https://doi.org/10.1190/1.3238367"
+    },
+    {
+      "number": 4,
+      "doi": "10.1190/geo2011-0340.1",
+      "url": "https://doi.org/10.1190/geo2011-0340.1",
+      "status": "pass",
+      "issues": "",
+      "entry": "Zhu, H., & McMechan, G. A. (2012). Seismic interferometry-based imaging conditions for prestack reverse-time migration. *Geophysics*, 77(3), S77-S86. https://doi.org/10.1190/geo2011-0340.1"
+    },
+    {
+      "number": 5,
+      "doi": "10.1111/j.1365-2478.2012.01092.x",
+      "url": "https://doi.org/10.1111/j.1365-2478.2012.01092.x",
+      "status": "pass",
+      "issues": "",
+      "entry": "Dai, W., Fowler, P., & Schuster, G. T. (2012). Multi-source least-squares reverse time migration. *Geophysical Prospecting*, 60(4), 681-695. https://doi.org/10.1111/j.1365-2478.2012.01092.x"
+    },
+    {
+      "number": 6,
+      "doi": "",
+      "url": "https://openreview.net/forum?id=7w-a8PYPlP",
+      "status": "pass",
+      "issues": "",
+      "entry": "Deng, C., Feng, S., Wang, H., Zhang, X., Jin, P., Feng, Y., Zeng, Q., Chen, Y., & Lin, Y. (2022). OpenFWI: Large-scale multi-structural benchmark datasets for full waveform inversion. *Advances in Neural Information Processing Systems, Datasets and Benchmarks Track*, 35. https://openreview.net/forum?id=7w-a8PYPlP"
+    },
+    {
+      "number": 7,
+      "doi": "",
+      "url": "https://openreview.net/forum?id=a68SUt6zFt",
+      "status": "pass",
+      "issues": "",
+      "entry": "Oquab, M., Darcet, T., Moutakanni, T., et al. (2024). DINOv2: Learning robust visual features without supervision. *Transactions on Machine Learning Research*. https://openreview.net/forum?id=a68SUt6zFt"
+    },
+    {
+      "number": 8,
+      "doi": "10.1038/s41598-023-40578-8",
+      "url": "https://doi.org/10.1038/s41598-023-40578-8",
+      "status": "pass",
+      "issues": "",
+      "entry": "Wang, B., Feng, S., Fu, L.-Y., & Hu, L. (2023). Least squares reverse time migration imaging with illumination compensation. *Scientific Reports*, 13. https://doi.org/10.1038/s41598-023-40578-8"
+    }
+  ]
+}

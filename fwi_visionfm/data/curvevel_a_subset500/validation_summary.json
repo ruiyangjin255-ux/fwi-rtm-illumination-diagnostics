@@ -1,0 +1,42 @@
+{
+  "sample_count": 500,
+  "records_shape_set": [
+    [
+      5,
+      70,
+      1000
+    ]
+  ],
+  "velocity_shape_set": [
+    [
+      70,
+      70
+    ]
+  ],
+  "is_uniform_records_shape": true,
+  "is_uniform_velocity_shape": true,
+  "inferred_depth": 70,
+  "inferred_width": 70,
+  "data_dir": "D:\\ryjin\\fwi_visionfm\\data\\curvevel_a_subset500",
+  "has_source_positions_count": 0,
+  "records_stats": {
+    "min": -26.430404663085938,
+    "max": 52.18177032470703,
+    "mean": -5.218950900598429e-05,
+    "std": 1.4917819499969482
+  },
+  "velocity_stats": {
+    "min": 1501.0,
+    "max": 4500.0,
+    "mean": 2806.970703125,
+    "std": 792.7022094726562
+  },
+  "records_min": -26.430404663085938,
+  "records_max": 52.18177032470703,
+  "records_mean": -5.218950900598429e-05,
+  "records_std": 1.4917819499969482,
+  "velocity_min": 1501.0,
+  "velocity_max": 4500.0,
+  "velocity_mean": 2806.970703125,
+  "velocity_std": 792.7022094726562
+}
