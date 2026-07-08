@@ -1,0 +1,105 @@
+{
+  "jge_author_guide_url": "https://academic.oup.com/jge/pages/general_instructions",
+  "jge_paper_limits": {
+    "abstract_words": 250,
+    "keywords": 5,
+    "references": 50,
+    "figures_tables": 10,
+    "word_count": 8000,
+    "alt_text_required": true
+  },
+  "innovation_claims": [
+    {
+      "rank": 1,
+      "claim_id": "illumination_trust_spatial_update_gate",
+      "manuscript_claim": "Illumination-trust spatial FWI update gate for salt-model velocity updating.",
+      "novelty_position": "Converts weak global FWI recovery into a spatial update-selection method by accepting updates only inside illumination-trusted zones.",
+      "required_evidence": "FWI misfit reduction, MAE/RMSE, edge MAE, candidate alpha(x,z) gates, selected gate, and update-trust frontier.",
+      "implemented_program": "build_spatial_update_gate.py; optimize_fwi_update_scale.py; run_optimized_fwi_rtm_pipeline.py",
+      "primary_outputs": "spatial_update_gate_candidates.csv; spatial_update_gate_model.npy; figure4_spatial_update_gate.*",
+      "main_figure": "Figure 1; Figure 4",
+      "claim_boundary": "Supports SEG/Salt benchmark update selection, not direct field-data deployment without proxy trust metrics.",
+      "paper_section": "Methods 3.5; Results 4.1-4.2; Discussion 5.2"
+    },
+    {
+      "rank": 2,
+      "claim_id": "quality_gated_fwi_rtm",
+      "manuscript_claim": "Quality-gated FWI-to-RTM validation after update selection.",
+      "novelty_position": "Uses model and image gates to prevent harmful FWI updates from entering RTM interpretation.",
+      "required_evidence": "Global update-scale scan, RTM before/after metrics, target-zone diagnostics, and conservative claim boundary.",
+      "implemented_program": "run_rtm_before_after_fwi.py; build_target_zone_illumination_diagnostics.py",
+      "primary_outputs": "fwi_update_scale_optimization.csv; rtm_before_after_summary.json; target_zone_illumination_metrics.csv",
+      "main_figure": "Figure 2; Figure 5",
+      "claim_boundary": "Supports conservative velocity-update screening, not high-resolution FWI velocity recovery.",
+      "paper_section": "Results 4.3-4.5"
+    },
+    {
+      "rank": 3,
+      "claim_id": "target_zone_illumination_diagnostics",
+      "manuscript_claim": "Target-zone illumination, RTM-response, and FWI-update energy diagnostics.",
+      "novelty_position": "Uses salt-top, salt-flank, and subsalt masks to evaluate whether updates and RTM response occur where interpretation needs them.",
+      "required_evidence": "Source-receiver illumination, low-illumination fraction, RTM response, full update energy, damped update energy.",
+      "implemented_program": "build_target_zone_illumination_diagnostics.py",
+      "primary_outputs": "target_zone_illumination_metrics.csv; figure5_target_zone_illumination_diagnostics.*",
+      "main_figure": "Figure 5",
+      "claim_boundary": "Shows the subsalt target remains weakly illuminated and almost unupdated; it does not claim solved subsalt imaging.",
+      "paper_section": "Results 4.5; Discussion 5.1"
+    },
+    {
+      "rank": 4,
+      "claim_id": "imaging_condition_separation",
+      "manuscript_claim": "Explicit separation of RTM image normalization and FWI gradient preconditioning.",
+      "novelty_position": "Prevents the common over-claim that better RTM display normalization proves better FWI inversion.",
+      "required_evidence": "Source-normalized, source-receiver-normalized, Laplacian, receiver illumination, correlation and low-illumination metrics.",
+      "implemented_program": "run_scheme2_imaging_condition_compare.py; make_jge_main_figures.py",
+      "primary_outputs": "rtm_imaging_condition_metrics.csv; figure3_imaging_condition_diagnostics.*",
+      "main_figure": "Figure 3",
+      "claim_boundary": "Supports imaging-condition interpretation; FWI preconditioning remains a separate ablation result.",
+      "paper_section": "Methods 3.3-3.4; Results 4.4"
+    },
+    {
+      "rank": 5,
+      "claim_id": "negative_ablation_boundary",
+      "manuscript_claim": "Negative-result-aware local FWI ablation as supporting evidence.",
+      "novelty_position": "Uses a controlled small salt window to show adaptive line search dominates the current lightweight illumination preconditioner.",
+      "required_evidence": "Baseline, illumination-preconditioned, epsilon scan, max-update scan, line search, and adaptive extended line-search reductions.",
+      "implemented_program": "run_small_salt_fwi.py; optimize_existing_salt_result.py",
+      "primary_outputs": "local_fwi_strategy_ranking.csv; adaptive_line_search_summary.json",
+      "main_figure": "Supplementary table",
+      "claim_boundary": "Positions illumination preconditioning as a limitation and future method target, not as the current main improvement.",
+      "paper_section": "Results 4.6; Discussion 5.2"
+    }
+  ],
+  "figure_alt_text": [
+    {
+      "figure": "Figure 1",
+      "title": "Literature-guided FWI-RTM synthesis and claim boundary",
+      "alt_text": "Four-panel summary linking literature needs to implemented FWI-RTM quality gates, update-scale selection, evidence strength, and conservative publishable claims.",
+      "linked_claim": "quality_gated_fwi_rtm"
+    },
+    {
+      "figure": "Figure 2",
+      "title": "RTM validation before and after quality-gated FWI updating",
+      "alt_text": "RTM images from true, initial, and damped FWI velocities are compared with an after-minus-before panel; the damped update gives only a slight filtered RMSE improvement.",
+      "linked_claim": "quality_gated_fwi_rtm"
+    },
+    {
+      "figure": "Figure 3",
+      "title": "Full-aperture RTM imaging-condition diagnostics",
+      "alt_text": "Source-normalized, source-receiver-normalized, Laplacian source-normalized, and receiver-illumination panels show how imaging conditions change salt-model RTM expression.",
+      "linked_claim": "imaging_condition_separation"
+    },
+    {
+      "figure": "Figure 4",
+      "title": "Illumination-trust spatial FWI update gate",
+      "alt_text": "A spatial alpha map, candidate quality frontier, and error-map comparison show that illumination-trust gating improves MAE, RMSE, and edge MAE while avoiding global-update edge degradation.",
+      "linked_claim": "illumination_trust_spatial_update_gate"
+    },
+    {
+      "figure": "Figure 5",
+      "title": "Target-zone illumination, RTM response, and FWI update diagnostics",
+      "alt_text": "Salt-top, salt-flank, and subsalt masks are compared against illumination, RTM response, and FWI update energy, showing weak subsalt response and negligible subsalt updates.",
+      "linked_claim": "target_zone_illumination_diagnostics"
+    }
+  ]
+}
