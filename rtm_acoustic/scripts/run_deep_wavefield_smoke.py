@@ -17,7 +17,14 @@ ROOT = Path(__file__).resolve().parents[2]
 if __package__ in (None, ""):
     sys.path.insert(0, str(ROOT))
 
-from rtm_acoustic.acoustic_rtm import RTMConfig, _step_wavefield, make_absorbing_mask, ricker_wavelet
+from rtm_acoustic.acoustic_rtm import (
+    RTMConfig,
+    _step_wavefield,
+    make_absorbing_mask,
+    pad_rtm_config,
+    pad_velocity_model,
+    ricker_wavelet,
+)
 from rtm_acoustic.diagnostics.boundary_energy_audit import boundary_energy_ratio, boundary_mask, classify_boundary_energy
 from rtm_acoustic.diagnostics.deep_wavefield_coverage import build_depth_roi_masks, energy, summarize_deep_energy
 from rtm_acoustic.scripts._common import read_simple_yaml, write_json
@@ -120,10 +127,19 @@ def main() -> None:
         source_z=int(fwi_cfg["source_z"]),
         receiver_z=int(fwi_cfg["receiver_z"]),
         absorb_cells=int(fwi_cfg["absorb_cells"]),
+        absorb_strength=float(config.get("absorb_strength", 3.0)),
         fd_order=int(fwi_cfg["fd_order"]),
+        absorb_top=bool(config.get("absorb_top", False)),
     )
+    pad_x = int(config.get("pad_x", 0))
+    pad_top = int(config.get("pad_top", 0))
+    pad_bottom = int(config.get("pad_bottom", 0))
+    base_cfg = pad_rtm_config(base_cfg, pad_x=pad_x, pad_top=pad_top, pad_bottom=pad_bottom)
     initial = np.load(fwi_dir / "full_salt_initial_model.npy").astype(np.float32, copy=False)
     true = np.load(fwi_dir / "full_salt_true_model.npy").astype(np.float32, copy=False)
+    if pad_x or pad_top or pad_bottom:
+        initial = pad_velocity_model(initial, pad_x=pad_x, pad_top=pad_top, pad_bottom=pad_bottom)
+        true = pad_velocity_model(true, pad_x=pad_x, pad_top=pad_top, pad_bottom=pad_bottom)
     audit_shots = [int(v) for v in summary["audit_split"]["audit_shots"]]
     if args.shots <= 1:
         shots = [audit_shots[len(audit_shots) // 2]]
@@ -185,6 +201,7 @@ def main() -> None:
         "config_hash": file_hash(args.config),
         "input_hashes": {"initial": file_hash(fwi_dir / "full_salt_initial_model.npy"), "true": file_hash(fwi_dir / "full_salt_true_model.npy")},
         "rtm_config": asdict(base_cfg),
+        "padding": {"pad_x": pad_x, "pad_top": pad_top, "pad_bottom": pad_bottom},
         "shots": shots,
         "snapshot_times_seconds": requested_times,
     }

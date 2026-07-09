@@ -1,16 +1,21 @@
-* text=auto eol=lf
-
-*.bat text eol=crlf
-*.cmd text eol=crlf
+*.py text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
 *.ps1 text eol=crlf
+*.json text eol=lf
+*.csv text eol=lf
 
 *.png binary
 *.jpg binary
 *.jpeg binary
-*.gif binary
 *.pdf binary
-*.tif binary
+*.svg text eol=lf
+*.npy binary
+*.npz binary
+*.bin binary
+*.dat binary
+*.su binary
+*.sgy binary
+*.segy binary
 *.tiff binary
-*.zip binary
-*.gz binary
-*.7z binary

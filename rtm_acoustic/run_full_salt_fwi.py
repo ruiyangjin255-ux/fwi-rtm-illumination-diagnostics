@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import sys
+from concurrent.futures import FIRST_COMPLETED, ProcessPoolExecutor, wait
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
 from typing import Any
@@ -490,6 +491,87 @@ def _compute_cg_direction(
     return direction.astype(np.float32, copy=False), float(beta)
 
 
+def _compute_fwi_shot_contribution(payload: dict[str, Any]) -> dict[str, Any]:
+    """Compute one shot contribution in an isolated worker process."""
+    config: FullSaltFWIConfig = payload["config"]
+    true_model: Array = payload["true_model"]
+    current: Array = payload["current"]
+    output_dir = Path(payload["output_dir"])
+    iteration = int(payload["iteration"])
+    shot_index = int(payload["shot_index"])
+    source_x = int(payload["source_x"])
+    save_iteration_diagnostics = bool(payload["save_iteration_diagnostics"])
+    num_shot_groups = int(payload["num_shot_groups"])
+    shot_group_mode = str(payload["shot_group_mode"])
+
+    runtime = _runtime_config(config)
+    cfg = make_shot_config(runtime, _runtime_source_x(config, source_x), runtime.nx, runtime.nz)
+    observed = _load_or_create_observation(true_model, config, output_dir, source_x)
+    wavefield_path = output_dir / "wavefields" / f"iter{iteration:03d}_shot{shot_index:05d}_source.dat"
+    try:
+        predicted = forward_model(current, cfg, wavefield_path=wavefield_path)
+        residual = predicted - observed
+        misfit = compute_record_misfit(predicted, observed)
+        update_direction = compute_update_direction(current, cfg, residual, wavefield_path)
+        illumination = None
+        if config.optimizer == "p-cg":
+            illumination = compute_source_illumination(wavefield_path, cfg)
+            update_direction = apply_illumination_preconditioner(
+                update_direction,
+                illumination,
+                epsilon=config.preconditioner_epsilon,
+            )
+        if save_iteration_diagnostics:
+            if illumination is None:
+                illumination = compute_source_illumination(wavefield_path, cfg)
+            source_energy_proxy = np.asarray(illumination, dtype=np.float32)
+            group_id = _shot_group_index(shot_index, num_shot_groups, shot_group_mode)
+        else:
+            source_energy_proxy = None
+            group_id = -1
+        return {
+            "shot_index": shot_index,
+            "source_x": source_x,
+            "misfit": float(misfit),
+            "update_direction": np.asarray(update_direction, dtype=np.float32),
+            "source_energy_proxy": source_energy_proxy,
+            "group_id": int(group_id),
+        }
+    finally:
+        wavefield_path.unlink(missing_ok=True)
+
+
+def _submit_shot(
+    executor: ProcessPoolExecutor,
+    *,
+    config: FullSaltFWIConfig,
+    true_model: Array,
+    current: Array,
+    output_dir: Path,
+    iteration: int,
+    shot_index: int,
+    source_x: int,
+    save_iteration_diagnostics: bool,
+    num_shot_groups: int,
+    shot_group_mode: str,
+):
+    return executor.submit(
+        _compute_fwi_shot_contribution,
+        {
+            "config": config,
+            "true_model": true_model,
+            "current": current,
+            "output_dir": str(output_dir),
+            "iteration": int(iteration),
+            "shot_index": int(shot_index),
+            "source_x": int(source_x),
+            "save_iteration_diagnostics": bool(save_iteration_diagnostics),
+            "num_shot_groups": int(num_shot_groups),
+            "shot_group_mode": str(shot_group_mode),
+        },
+    )
+
+
 def run_full_salt_fwi(
     *,
     model_path: str | Path,
@@ -504,10 +586,13 @@ def run_full_salt_fwi(
     diagnostics_dir: str | Path | None = None,
     audit_fold: int | None = None,
     audit_num_folds: int = 4,
+    workers: int = 1,
 ) -> dict[str, Any]:
     """运行完整盐丘模型 FWI，并在每炮后保存可恢复 checkpoint。"""
     if config.optimizer not in {"steepest", "cg", "p-cg"}:
         raise ValueError("optimizer 必须是 steepest、cg 或 p-cg")
+    if workers < 1:
+        raise ValueError("workers 必须 >= 1")
     if config.pad_x < 0 or config.pad_top < 0 or config.pad_bottom < 0:
         raise ValueError("pad_x、pad_top 和 pad_bottom 必须为非负整数")
     if save_iteration_diagnostics:
@@ -588,35 +673,21 @@ def run_full_salt_fwi(
         group_counts = [0 for _ in range(num_shot_groups)]
         source_energy_proxy = np.zeros_like(current, dtype=np.float32)
 
-        for shot_index, source_x in enumerate(shots):
-            if source_x in completed_set:
-                continue
-            runtime = _runtime_config(config)
-            cfg = make_shot_config(runtime, _runtime_source_x(config, source_x), runtime.nx, runtime.nz)
-            observed = _load_or_create_observation(true_model, config, output_dir, source_x)
-            wavefield_path = output_dir / "wavefields" / f"iter{iteration:03d}_shot{shot_index:05d}_source.dat"
-            predicted = forward_model(current, cfg, wavefield_path=wavefield_path)
-            residual = predicted - observed
-            misfit_sum += compute_record_misfit(predicted, observed)
-            update_direction = compute_update_direction(current, cfg, residual, wavefield_path)
-            illumination = None
-            if config.optimizer == "p-cg":
-                illumination = compute_source_illumination(wavefield_path, cfg)
-                update_direction = apply_illumination_preconditioner(
-                    update_direction,
-                    illumination,
-                    epsilon=config.preconditioner_epsilon,
-                )
+        pending_shots = [(index, int(source_x)) for index, source_x in enumerate(shots) if int(source_x) not in completed_set]
+
+        def apply_shot_result(result: dict[str, Any]) -> None:
+            nonlocal misfit_sum, gradient_sum, source_energy_proxy
+            source_x = int(result["source_x"])
+            update_direction = np.asarray(result["update_direction"], dtype=np.float32)
+            misfit_sum += float(result["misfit"])
             if save_iteration_diagnostics:
-                if illumination is None:
-                    illumination = compute_source_illumination(wavefield_path, cfg)
-                group_id = _shot_group_index(shot_index, num_shot_groups, shot_group_mode)
+                group_id = int(result["group_id"])
                 group_gradients[group_id] += update_direction
                 group_counts[group_id] += 1
-                source_energy_proxy += np.asarray(illumination, dtype=np.float32)
+                source_energy_proxy += np.asarray(result["source_energy_proxy"], dtype=np.float32)
             gradient_sum += update_direction
-            completed_shots.append(int(source_x))
-            completed_set.add(int(source_x))
+            completed_shots.append(source_x)
+            completed_set.add(source_x)
             _write_iteration_checkpoint(
                 output_dir,
                 iteration=iteration,
@@ -627,7 +698,69 @@ def run_full_salt_fwi(
                 config=config,
                 shots=shots,
             )
-            wavefield_path.unlink(missing_ok=True)
+
+        if workers == 1:
+            for shot_index, source_x in pending_shots:
+                result = _compute_fwi_shot_contribution(
+                    {
+                        "config": config,
+                        "true_model": true_model,
+                        "current": current,
+                        "output_dir": str(output_dir),
+                        "iteration": int(iteration),
+                        "shot_index": int(shot_index),
+                        "source_x": int(source_x),
+                        "save_iteration_diagnostics": bool(save_iteration_diagnostics),
+                        "num_shot_groups": int(num_shot_groups),
+                        "shot_group_mode": str(shot_group_mode),
+                    }
+                )
+                apply_shot_result(result)
+        else:
+            max_workers = max(1, int(workers))
+            next_index = 0
+            futures = set()
+            with ProcessPoolExecutor(max_workers=max_workers) as executor:
+                while next_index < len(pending_shots) and len(futures) < max_workers:
+                    shot_index, source_x = pending_shots[next_index]
+                    futures.add(
+                        _submit_shot(
+                            executor,
+                            config=config,
+                            true_model=true_model,
+                            current=current,
+                            output_dir=output_dir,
+                            iteration=iteration,
+                            shot_index=shot_index,
+                            source_x=source_x,
+                            save_iteration_diagnostics=save_iteration_diagnostics,
+                            num_shot_groups=num_shot_groups,
+                            shot_group_mode=shot_group_mode,
+                        )
+                    )
+                    next_index += 1
+                while futures:
+                    done, futures = wait(futures, return_when=FIRST_COMPLETED)
+                    for future in done:
+                        apply_shot_result(future.result())
+                        if next_index < len(pending_shots):
+                            shot_index, source_x = pending_shots[next_index]
+                            futures.add(
+                                _submit_shot(
+                                    executor,
+                                    config=config,
+                                    true_model=true_model,
+                                    current=current,
+                                    output_dir=output_dir,
+                                    iteration=iteration,
+                                    shot_index=shot_index,
+                                    source_x=source_x,
+                                    save_iteration_diagnostics=save_iteration_diagnostics,
+                                    num_shot_groups=num_shot_groups,
+                                    shot_group_mode=shot_group_mode,
+                                )
+                            )
+                            next_index += 1
 
         mean_misfit = float(misfit_sum / max(len(shots), 1))
         average_update = gradient_sum / np.float32(max(len(shots), 1))
@@ -775,6 +908,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--diagnostics-dir", type=Path, default=None)
     parser.add_argument("--audit-fold", type=int, default=-1, help="Exclude shots with shot_index mod audit_num_folds equal to this fold.")
     parser.add_argument("--audit-num-folds", type=int, default=4)
+    parser.add_argument("--workers", type=int, default=1, help="FWI shot workers. Keep 1 for serial; use 2 as the conservative local parallel setting.")
     return parser.parse_args()
 
 
@@ -809,6 +943,7 @@ def main() -> None:
         diagnostics_dir=args.diagnostics_dir,
         audit_fold=args.audit_fold if args.audit_fold >= 0 else None,
         audit_num_folds=args.audit_num_folds,
+        workers=args.workers,
     )
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 

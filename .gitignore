@@ -1,11 +1,6 @@
-# Local agent/workspace state
-.agents/
-.codex/
-tmp/
-
-# Python caches and test artifacts
 __pycache__/
 *.py[cod]
+*.pyo
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -13,29 +8,19 @@ __pycache__/
 htmlcov/
 *.egg-info/
 
-# Virtual environments and local environment files
+# Local environments and editor state
+.agents/
+.codex/
+tmp/
 .venv/
 venv/
 env/
-*.env
+.env
 .env*
+.idea/
+.vscode/
 
-# External/vendor checkouts
-.external/
-fwi_visionfm/external/ncs_models/
-
-# Model weights and ML checkpoints
-weights/
-**/weights/
-*.ckpt
-*.h5
-*.onnx
-*.pt
-*.pth
-*.safetensors
-*.tflite
-
-# Generated outputs and experiment artifacts
+# Generated experiment outputs
 outputs/
 **/outputs/
 results/
@@ -46,21 +31,27 @@ checkpoint/
 **/checkpoint/
 optimizer_state/
 **/optimizer_state/
-wavefields/
-**/wavefields/
+rtm_acoustic/outputs/
+paper_rewriting_output/
+.external/
+fwi_visionfm/
+波场数值模拟/
 
-# Large scientific/binary data products
-*.bin
-*.dat
-*.mat
+# Large local model/result arrays
 *.npy
 *.npz
+*.bin
+*.dat
+*.su
+*.sgy
+*.segy
+*.tif
+*.tiff
+*.mat
 *.hdf5
 *.h5ad
 
-# Rendered figures and generated media
-*.tif
-*.tiff
+# Rendered/generated media
 *.png
 *.jpg
 *.jpeg
@@ -68,14 +59,19 @@ wavefields/
 *.mp4
 *.avi
 
-# Compiled binaries
+# Runtime logs and temporary files
+*.log
+*.tmp
+wavefields/
+**/wavefields/
+
+# Native build outputs from local numerical experiments
 *.o
 *.obj
 *.exe
 *.dll
 *.so
 *.dylib
-**/fd2d_pml/bin/mod
 
 # OS/editor noise and local backups
 .DS_Store
