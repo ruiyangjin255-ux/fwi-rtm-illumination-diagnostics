@@ -1,6 +1,0 @@
-rank,innovation,evidence,risk,paper_position
-1,JGE-core: reproducible FWI-RTM diagnostic workflow for salt imaging,"Full-model FWI, full-aperture RTM, local-window optimizer ablation",FWI image quality still preliminary; must frame as diagnostic workflow,main contribution
-2,Separation of RTM image normalization and FWI update preconditioning,RTM condition correlations plus local preconditioner negative ablations,Needs careful language; no claim of superior preconditioned FWI,methodological contribution
-3,Adaptive line-search dominance over lightweight illumination scaling,6.3690% local baseline vs 4.1386% local preconditioned reduction,Local-window result only; should motivate full-model follow-up,results and discussion
-4,Quantitative imaging-condition ranking instead of visual-only RTM comparison,"Correlation, p99 amplitude, low-illumination fraction",Needs stronger structural target metrics for higher-tier submission,supporting result
-5,Optional ML low-wavenumber prior linked to FWI-RTM loop,Existing fwi_visionfm smoke and small-sample OpenFWI results,Not ready as a JGE core claim without new controlled experiments,future work only

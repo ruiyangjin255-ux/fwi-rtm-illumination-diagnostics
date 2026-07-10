@@ -2,23 +2,25 @@
 
 ## Project Identity
 
-- Repository: `ruiyangjin255-ux/fwi-rtm-illumination-diagnostics`
+- Current repository: `ruiyangjin255-ux/fwi-rtm-illumination-diagnostics`
+- Recommended repository name: `admit-fwi-update-admissibility-audit`
 - Current project: ADMIT-FWI update admissibility audit framework
-- Primary implementation path: `rtm_acoustic/`
+- Primary implementation path: `admit_fwi/`
 
 ## Included in Git
 
-- ADMIT-FWI/RTM/FWI source code under `rtm_acoustic/`.
-- Audit and production configurations under `rtm_acoustic/configs/`.
-- Diagnostic modules under `rtm_acoustic/diagnostics/`.
-- Reproducible run scripts under `rtm_acoustic/scripts/`.
-- Manuscript-facing documentation and figure metadata under `docs/` and `rtm_acoustic/docs/`.
+- ADMIT-FWI/RTM/FWI source code under `admit_fwi/`.
+- Audit and production configurations under `admit_fwi/configs/`.
+- Diagnostic modules under `admit_fwi/diagnostics/`.
+- Reproducible run scripts under `admit_fwi/scripts/`.
+- Manuscript-facing documentation and figure metadata under `docs/` and `admit_fwi/docs/`.
 
 ## Excluded from Git
 
-- `rtm_acoustic/outputs/`
+- `admit_fwi/outputs/`
 - `paper_rewriting_output/`
 - `.external/`
+- legacy local project directories such as `learning-based FWI extension/` and `external_wavefield_models/`
 - generated `*.npy`, `*.bin`, `*.dat`, `*.tiff`, logs, wavefield memmaps, Python caches, and compiled local binaries
 
 These files are local experiment products. They should be regenerated from the committed code/configs or stored in a dedicated data release, not mixed into the source repository.
@@ -26,9 +28,9 @@ These files are local experiment products. They should be regenerated from the c
 ## Key Commands
 
 ```powershell
-python -m py_compile rtm_acoustic\run_full_salt_fwi.py rtm_acoustic\scripts\run_deep_wavefield_smoke.py
-python rtm_acoustic\scripts\run_deep_wavefield_smoke.py --config rtm_acoustic\configs\deep_time_preflight_pml_pad_v1.yaml --shots 3
-powershell -ExecutionPolicy Bypass -File rtm_acoustic\scripts\run_deep_time_multiscale_fwi_production.ps1
+python -m py_compile admit_fwi\run_full_salt_fwi.py admit_fwi\scripts\run_deep_wavefield_smoke.py
+python admit_fwi\scripts\run_deep_wavefield_smoke.py --config admit_fwi\configs\deep_time_preflight_pml_pad_v1.yaml --shots 3
+powershell -ExecutionPolicy Bypass -File admit_fwi\scripts\run_deep_time_multiscale_fwi_production.ps1
 ```
 
 ## Current Evidence Status

@@ -1,0 +1,233 @@
+{
+  "created_at": "2026-07-07T10:41:48",
+  "output_dir": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures",
+  "figure_formats": [
+    "png",
+    "pdf",
+    "svg",
+    "tiff"
+  ],
+  "files": {
+    "manuscript": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\sci_fwi_rtm_innovation_manuscript_draft.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\manuscript\\sci_fwi_rtm_innovation_manuscript_draft.md",
+      "bytes": 30722
+    },
+    "captions": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\jge_main_figure_captions.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\jge_main_figure_captions.md",
+      "bytes": 2004
+    },
+    "pipeline_report": {
+      "source": "D:\\ryjin\\admit_fwi\\outputs\\FWI\\full_salt_fwi_cg_allshots_v2\\optimized_fwi_rtm_pipeline\\optimized_fwi_rtm_pipeline_report.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\optimized_fwi_rtm_pipeline_report.md",
+      "bytes": 749
+    },
+    "jge_upgrade_plan": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\jge_upgrade_plan.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\jge_upgrade_plan.md",
+      "bytes": 3667
+    },
+    "literature_positioning": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\jge_literature_positioning.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\jge_literature_positioning.md",
+      "bytes": 7968
+    },
+    "method_synthesis": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\method_synthesis_matrix.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\method_synthesis_matrix.md",
+      "bytes": 2615
+    },
+    "innovation_framework": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\jge_innovation_framework.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\jge_innovation_framework.md",
+      "bytes": 2773
+    },
+    "figure_alt_text": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\jge_figure_alt_text.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\jge_figure_alt_text.md",
+      "bytes": 1785
+    },
+    "core_innovation_from_references": {
+      "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\core_innovation_from_references.md",
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\reports\\core_innovation_from_references.md",
+      "bytes": 7455
+    },
+    "figures": {
+      "figure1_fwi_quality_gate.png": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure1_fwi_quality_gate.png",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure1_fwi_quality_gate.png",
+        "bytes": 301697
+      },
+      "figure1_fwi_quality_gate.pdf": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure1_fwi_quality_gate.pdf",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure1_fwi_quality_gate.pdf",
+        "bytes": 55694
+      },
+      "figure1_fwi_quality_gate.svg": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure1_fwi_quality_gate.svg",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure1_fwi_quality_gate.svg",
+        "bytes": 36902
+      },
+      "figure1_fwi_quality_gate.tiff": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure1_fwi_quality_gate.tiff",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure1_fwi_quality_gate.tiff",
+        "bytes": 54932930
+      },
+      "figure2_rtm_before_after_validation.png": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure2_rtm_before_after_validation.png",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure2_rtm_before_after_validation.png",
+        "bytes": 1253259
+      },
+      "figure2_rtm_before_after_validation.pdf": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure2_rtm_before_after_validation.pdf",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure2_rtm_before_after_validation.pdf",
+        "bytes": 297000
+      },
+      "figure2_rtm_before_after_validation.svg": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure2_rtm_before_after_validation.svg",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure2_rtm_before_after_validation.svg",
+        "bytes": 592986
+      },
+      "figure2_rtm_before_after_validation.tiff": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure2_rtm_before_after_validation.tiff",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure2_rtm_before_after_validation.tiff",
+        "bytes": 57039650
+      },
+      "figure3_imaging_condition_diagnostics.png": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure3_imaging_condition_diagnostics.png",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure3_imaging_condition_diagnostics.png",
+        "bytes": 1277435
+      },
+      "figure3_imaging_condition_diagnostics.pdf": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure3_imaging_condition_diagnostics.pdf",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure3_imaging_condition_diagnostics.pdf",
+        "bytes": 405878
+      },
+      "figure3_imaging_condition_diagnostics.svg": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure3_imaging_condition_diagnostics.svg",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure3_imaging_condition_diagnostics.svg",
+        "bytes": 586844
+      },
+      "figure3_imaging_condition_diagnostics.tiff": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure3_imaging_condition_diagnostics.tiff",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure3_imaging_condition_diagnostics.tiff",
+        "bytes": 57039650
+      },
+      "figure4_spatial_update_gate.png": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure4_spatial_update_gate.png",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure4_spatial_update_gate.png",
+        "bytes": 410487
+      },
+      "figure4_spatial_update_gate.pdf": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure4_spatial_update_gate.pdf",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure4_spatial_update_gate.pdf",
+        "bytes": 94463
+      },
+      "figure4_spatial_update_gate.svg": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure4_spatial_update_gate.svg",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure4_spatial_update_gate.svg",
+        "bytes": 215769
+      },
+      "figure4_spatial_update_gate.tiff": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure4_spatial_update_gate.tiff",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure4_spatial_update_gate.tiff",
+        "bytes": 55973534
+      },
+      "figure5_target_zone_illumination_diagnostics.png": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure5_target_zone_illumination_diagnostics.png",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure5_target_zone_illumination_diagnostics.png",
+        "bytes": 342192
+      },
+      "figure5_target_zone_illumination_diagnostics.pdf": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure5_target_zone_illumination_diagnostics.pdf",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure5_target_zone_illumination_diagnostics.pdf",
+        "bytes": 82753
+      },
+      "figure5_target_zone_illumination_diagnostics.svg": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure5_target_zone_illumination_diagnostics.svg",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure5_target_zone_illumination_diagnostics.svg",
+        "bytes": 105641
+      },
+      "figure5_target_zone_illumination_diagnostics.tiff": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_main_figures\\figure5_target_zone_illumination_diagnostics.tiff",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\figures\\figure5_target_zone_illumination_diagnostics.tiff",
+        "bytes": 55973534
+      }
+    },
+    "tables": {
+      "full_fwi_ranking.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\full_fwi_ranking.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\full_fwi_ranking.csv",
+        "bytes": 793
+      },
+      "fwi_model_quality_ranking.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\fwi_model_quality_ranking.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\fwi_model_quality_ranking.csv",
+        "bytes": 982
+      },
+      "fwi_update_scale_optimization.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\fwi_update_scale_optimization.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\fwi_update_scale_optimization.csv",
+        "bytes": 844
+      },
+      "rtm_imaging_condition_metrics.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\rtm_imaging_condition_metrics.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\rtm_imaging_condition_metrics.csv",
+        "bytes": 479
+      },
+      "local_fwi_strategy_ranking.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\local_fwi_strategy_ranking.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\local_fwi_strategy_ranking.csv",
+        "bytes": 1135
+      },
+      "spatial_update_gate_candidates.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\spatial_update_gate_candidates.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\spatial_update_gate_candidates.csv",
+        "bytes": 126901
+      },
+      "innovation_ranking.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\innovation_ranking.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\innovation_ranking.csv",
+        "bytes": 1158
+      },
+      "method_synthesis_matrix.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\method_synthesis_matrix.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\method_synthesis_matrix.csv",
+        "bytes": 1653
+      },
+      "target_zone_illumination_metrics.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\target_zone_illumination_metrics.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\target_zone_illumination_metrics.csv",
+        "bytes": 884
+      },
+      "jge_innovation_framework.csv": {
+        "source": "D:\\ryjin\\admit_fwi\\docs\\jge_revision\\jge_innovation_framework.csv",
+        "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\tables\\jge_innovation_framework.csv",
+        "bytes": 3378
+      }
+    },
+    "checklist": {
+      "package_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_submission_checklist.md",
+      "bytes": 1353
+    },
+    "reference_audit": {
+      "markdown": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_reference_audit.md",
+      "json": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_reference_audit.json",
+      "csv": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_reference_audit.csv"
+    },
+    "readiness_report": {
+      "markdown": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_readiness_report.md",
+      "json": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\JGE_readiness_report.json"
+    }
+  },
+  "pipeline_metrics": {
+    "selected_alpha": 0.1,
+    "rtm_verdict": "after_fwi_closer_to_reference",
+    "filtered_rmse_before": 0.02713028664829544,
+    "filtered_rmse_after": 0.027109411257509722,
+    "filtered_rmse_improvement_fraction": 0.0007694496949604249
+  },
+  "manifest_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\package_manifest.json",
+  "file_index_path": "D:\\ryjin\\admit_fwi\\docs\\jge_submission_package_mainfigures\\package_file_index.csv"
+}

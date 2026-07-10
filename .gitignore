@@ -11,6 +11,8 @@ htmlcov/
 # Local environments and editor state
 .agents/
 .codex/
+.superpowers/
+**/.superpowers/
 tmp/
 .venv/
 venv/
@@ -31,6 +33,7 @@ checkpoint/
 **/checkpoint/
 optimizer_state/
 **/optimizer_state/
+admit_fwi/outputs/
 rtm_acoustic/outputs/
 paper_rewriting_output/
 .external/

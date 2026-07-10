@@ -1,0 +1,7 @@
+name: salt_reliability_gate_audit0_deep_time_v1
+output_dir: admit_fwi/outputs/salt_reliability_gate_audit0_deep_time_v1
+source_gate_dir: admit_fwi/outputs/salt_reliability_gate_audit0_v1
+time_dt: 0.001
+time_nt: 5000
+forbid_dt_change: true
+forbid_true_model_for_gate_selection: true

@@ -1,0 +1,25 @@
+name: deep_time_preflight_pml_pad_v1
+output_dir: admit_fwi/outputs/deep_time_preflight_pml_pad_v1
+fwi_dir: admit_fwi/outputs/FWI/full_salt_fwi_cg_audit0_train_ecg_v1
+gate_dir: admit_fwi/outputs/salt_reliability_gate_audit0_v1
+short_rtm_dir: admit_fwi/outputs/RTM/audit0_gate_rtm_v1
+time_dt: 0.001
+time_nt: 5000
+time_f0: 15.0
+wavelet_peak_time: 0.0666666667
+source_delay: null
+target_depth_fraction: 0.95
+safety_factor: 1.15
+margin_seconds: null
+v_ref_percentile: 10
+snapshot_times_seconds: [1.0, 2.0, 3.0, 4.0, 5.0]
+pad_x: 60
+pad_top: 40
+pad_bottom: 80
+absorb_top: true
+absorb_strength: 4.0
+audit_fold: 0
+audit_num_folds: 4
+forbid_dt_change: true
+forbid_overwrite_existing_outputs: true
+forbid_true_model_for_gate_selection: true

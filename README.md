@@ -1,4 +1,4 @@
-# ADMIT-FWI Update Admissibility Audit Framework
+# ADMIT-FWI: Update Admissibility Audit Framework
 
 本仓库当前聚焦 **ADMIT-FWI 更新可接受性审计框架**：在复杂盐丘 FWI-RTM 工作流中，不直接把全量 FWI 更新解释为可信地质改进，而是通过数据域、像域、ROI、深时窗和照明证据对更新进行可接受性审计。
 
@@ -11,21 +11,28 @@
 - 长记录、低频起始、多尺度 FWI 的生产命令框架。
 - 面向论文结果组织的 figure、caption、方法和结论边界材料。
 
+## Project Naming
+
+- 建议 GitHub 仓库名：`admit-fwi-update-admissibility-audit`
+- Python 包/源码目录：`admit_fwi`
+- 方法简称：`ADMIT-FWI`
+- 研究主题：复杂盐丘 FWI 更新可接受性审计，而不是普通 RTM 或旧项目目录整理。
+
 ## Repository Layout
 
-- `rtm_acoustic/`：主要 Python 实现，包含声波 RTM、完整盐丘 FWI、审计诊断和绘图脚本。
-- `rtm_acoustic/configs/`：ADMIT-FWI、盐丘更新门控、深时窗和 PML padding 预检配置。
-- `rtm_acoustic/diagnostics/`：更新可信度、照明、深时窗、边界能量、held-out audit 等诊断模块。
-- `rtm_acoustic/scripts/`：生产/预检脚本，包括长时窗多尺度 FWI PowerShell 命令。
-- `rtm_acoustic/docs/` 与 `docs/`：论文草稿、图件说明、JGE 修订材料和核心结果摘要。
+- `admit_fwi/`：主要 Python 实现，包含声波 RTM、完整盐丘 FWI、审计诊断和绘图脚本。
+- `admit_fwi/configs/`：ADMIT-FWI、盐丘更新门控、深时窗和 PML padding 预检配置。
+- `admit_fwi/diagnostics/`：更新可信度、照明、深时窗、边界能量、held-out audit 等诊断模块。
+- `admit_fwi/scripts/`：生产/预检脚本，包括长时窗多尺度 FWI PowerShell 命令。
+- `admit_fwi/docs/` 与 `docs/`：论文草稿、图件说明、JGE 修订材料和核心结果摘要。
 
 大型运行输出、`npy/bin/dat` 模型数组和本地中间文件默认不提交到 GitHub；需要时按文档命令本地复现。
 
 ## Quick Checks
 
 ```powershell
-python -m py_compile rtm_acoustic\run_full_salt_fwi.py rtm_acoustic\scripts\run_deep_wavefield_smoke.py
-python -m pytest rtm_acoustic\tests\test_acoustic_rtm.py -q
+python -m py_compile admit_fwi\run_full_salt_fwi.py admit_fwi\scripts\run_deep_wavefield_smoke.py
+python -m pytest admit_fwi\tests\test_acoustic_rtm.py -q
 ```
 
 ## Deep-Time PML Preflight
@@ -33,7 +40,7 @@ python -m pytest rtm_acoustic\tests\test_acoustic_rtm.py -q
 先检查长记录时窗和 PML padding 风险：
 
 ```powershell
-python rtm_acoustic\scripts\run_deep_wavefield_smoke.py --config rtm_acoustic\configs\deep_time_preflight_pml_pad_v1.yaml --shots 3
+python admit_fwi\scripts\run_deep_wavefield_smoke.py --config admit_fwi\configs\deep_time_preflight_pml_pad_v1.yaml --shots 3
 ```
 
 该配置使用 `nt=5000`、`dt=0.001 s`、`pad_x=60`、`pad_top=40`、`pad_bottom=80`，用于降低顶部/边界条带被误判为有效地质更新的风险。
@@ -43,10 +50,10 @@ python rtm_acoustic\scripts\run_deep_wavefield_smoke.py --config rtm_acoustic\co
 完整 168 炮训练集的多尺度长时窗流程由以下脚本封装：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File rtm_acoustic\scripts\run_deep_time_multiscale_fwi_production.ps1
+powershell -ExecutionPolicy Bypass -File admit_fwi\scripts\run_deep_time_multiscale_fwi_production.ps1
 ```
 
-脚本按 `4 Hz -> 6 Hz -> 8 Hz` 推进，并启用 PML padding、audit fold 隔离、shot-group diagnostics 和 `--workers 2` 并行炮计算。输出写入 `rtm_acoustic\outputs\FWI\...`，这些结果目录不进入 Git。
+脚本按 `4 Hz -> 6 Hz -> 8 Hz` 推进，并启用 PML padding、audit fold 隔离、shot-group diagnostics 和 `--workers 2` 并行炮计算。输出写入 `admit_fwi\outputs\FWI\...`，这些结果目录不进入 Git。
 
 ## Interpretation Boundary
 
@@ -57,6 +64,6 @@ powershell -ExecutionPolicy Bypass -File rtm_acoustic\scripts\run_deep_time_mult
 3. 盐体内部和盐下解释必须通过 deep-time、照明、ROI、held-out shot 和 RTM consistency 审计后才能接受；
 4. 若审计未通过，应把结果报告为“更新不可接受或证据不足”，而不是强行展示为深部成像改进。
 
-## GitHub Migration Note
+## GitHub Scope
 
-本次仓库主页已从旧的 `fwi_visionfm` 方向切换为 ADMIT-FWI 更新可接受性审计框架。旧项目文件如需保留，应放在单独归档分支；当前主线只保留与 ADMIT-FWI/RTM/FWI 审计相关的源码、配置、文档和可复现实验命令。
+当前主线只保留与 ADMIT-FWI/RTM/FWI 审计相关的源码、配置、文档和可复现实验命令。旧的深度学习 FWI、独立external_wavefield_models和本地结果目录不再作为 GitHub 主线内容。
